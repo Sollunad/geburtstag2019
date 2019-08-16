@@ -19,7 +19,7 @@
         data: () => ({
             rotation: 0,
             selected: '',
-            friendNames: ['Arne', 'Daniel', 'Erwin', 'Leonard', 'Nils', 'Vervi'],
+            friendNames: ['Arne', 'Daniel', 'Erwin', 'Leo', 'Nils', 'Vervi'],
             answers: [],
         }),
         computed: {

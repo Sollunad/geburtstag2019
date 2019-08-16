@@ -1,7 +1,7 @@
 <template>
     <z-view>
         <v-text-field solo v-model="password" v-if="!correctPassword"></v-text-field>
-        <div v-if="validated">{{discordLink}}</div>
+        <div v-if="validated">{{link}}</div>
         <v-btn @click="validate" v-if="correctPassword && !validated">Antworten validieren</v-btn>
         <div slot="extension" v-if="correctPassword && !validated">
             <z-spot v-for="friend in friends"
@@ -22,7 +22,7 @@
         data: () => ({
             correctPassword: false,
             validated: false,
-            discordLink: 'gg 8bCv3XS',
+            link: 'gg 8bCv3XS',
             password: '',
             friends: [
                 {
@@ -38,7 +38,7 @@
                     id: 2
                 },
                 {
-                    name: 'Leonard',
+                    name: 'Leo',
                     id: 3
                 },
                 {
@@ -50,7 +50,6 @@
                     id: 5
                 },
             ],
-            correctAnswers: ['Leonard', 'Vervi', 'Daniel', 'Vervi', 'Nils', 'Erwin'],
             rotation: 0
         }),
         computed: {
@@ -72,14 +71,15 @@
                 return (friend.id * 60 + this.rotation) % 360;
             },
             validate: function() {
+                const key = [3, 5, 1, 5, 4, 2];
                 const answers = JSON.parse(localStorage.getItem('answers'));
-                let correct = true;
                 for (let i = 0; i < 6; i++) {
-                    if (answers[i] !== this.correctAnswers[i]) correct = false;
+                    const answered = this.friends.find(f => f.name === answers[i]);
+                    if (!answered) return;
+                    const answeredId = answered.id;
+                    if (answeredId !== key[i]) return;
                 }
-                if (correct) {
-                    this.validated = true;
-                }
+                this.validated = true;
             }
         },
         mounted: function() {
