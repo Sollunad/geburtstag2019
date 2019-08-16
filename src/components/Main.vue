@@ -1,14 +1,16 @@
 <template>
     <z-view>
         <v-text-field solo v-model="password" v-if="!correctPassword"></v-text-field>
-        <v-btn @click="validate" v-if="correctPassword">Antworten validieren</v-btn>
-        <div slot="extension" v-if="correctPassword">
+        <div v-if="validated">{{discordLink}}</div>
+        <v-btn @click="validate" v-if="correctPassword && !validated">Antworten validieren</v-btn>
+        <div slot="extension" v-if="correctPassword && !validated">
             <z-spot v-for="friend in friends"
                     :key="friend.id"
                     :to-view="spotObject(friend)"
                     :angle="angle(friend)"
                     :distance="150">
                 {{friend.name}}
+                <!-- <img src="http://via.placeholder.com/128x128?text=Test" /> -->
             </z-spot>
         </div>
     </z-view>
@@ -18,8 +20,9 @@
     export default {
         name: "Main",
         data: () => ({
-            // TODO: Change this to false!!!
-            correctPassword: true,
+            correctPassword: false,
+            validated: false,
+            discordLink: 'gg 8bCv3XS',
             password: '',
             friends: [
                 {
@@ -74,7 +77,9 @@
                 for (let i = 0; i < 6; i++) {
                     if (answers[i] !== this.correctAnswers[i]) correct = false;
                 }
-                console.log(correct);
+                if (correct) {
+                    this.validated = true;
+                }
             }
         },
         mounted: function() {
