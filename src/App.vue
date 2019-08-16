@@ -1,31 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <z-canvas :views="views"></z-canvas>
 </template>
 
+<script>
+  import main from './components/Main';
+  import friend from './components/Friend';
+
+  export default {
+    data: () => ({
+      views: {
+        main,
+        friend
+      }
+    }),
+    mounted: function() {
+      this.$zircle.setView('main');
+      if (!localStorage.getItem('answers')) {
+        const emptyArray = ['','','','','',''];
+        localStorage.setItem('answers', JSON.stringify(emptyArray));
+      }
+    }
+  }
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+  @import url('https://use.fontawesome.com/releases/v5.1.0/css/all.css');
 </style>
