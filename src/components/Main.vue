@@ -22,6 +22,7 @@
         data: () => ({
             correctPassword: true,
             validated: false,
+            buttonColor: '',
             link: 'gg 8bCv3XS',
             password: '',
             friends: [
@@ -77,7 +78,10 @@
                     const answered = this.friends.find(f => f.name === answers[i]);
                     if (!answered) return;
                     const answeredId = answered.id;
-                    if (answeredId !== key[i]) return;
+                    if (answeredId !== key[i]) {
+                        // play wrong sound
+                        return;
+                    }
                 }
                 this.validated = true;
             }
