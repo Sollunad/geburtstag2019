@@ -20,7 +20,7 @@
     export default {
         name: "Main",
         data: () => ({
-            correctPassword: false,
+            correctPassword: true,
             validated: false,
             link: 'gg 8bCv3XS',
             password: '',

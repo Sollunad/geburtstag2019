@@ -7,7 +7,9 @@
         </select>
         <div slot="extension">
             <z-spot v-for="note in voicenotes" :key="note" :angle="angle(note)" :distance="150">
-                {{note}}
+                <div @click="playSound(note)">
+                    {{note}}
+                </div>
             </z-spot>
         </div>
     </z-view>
@@ -27,12 +29,20 @@
                 return this.$zircle.getParams();
             },
             voicenotes: function() {
-                return [0,1,2,3,4]
+                return [1,2,3,4,5]
             }
         },
         methods: {
             angle: function(note) {
                 return (note * 72 + this.rotation) % 360;
+            },
+            playSound: async function(sound) {
+                const basePath = 'https://sollunad.de/SURVEY_PROGRAM/sound'
+                const friend = this.friendNames[this.props.id].toLowerCase();
+                const path = `${basePath}/${friend}/${sound}.ogg`;
+                console.log(path);
+                const audio = new Audio(path);
+                await audio.play();
             }
         },
         mounted: function() {
