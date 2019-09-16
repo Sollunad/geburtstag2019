@@ -20,10 +20,10 @@
     export default {
         name: "Main",
         data: () => ({
-            correctPassword: true,
+            correctPassword: false,
             validated: false,
             buttonColor: '',
-            link: 'gg 8bCv3XS',
+            link: 'gg ?bcv?xs',
             password: '',
             friends: [
                 {
@@ -71,7 +71,7 @@
             angle: function(friend) {
                 return (friend.id * 60 + this.rotation) % 360;
             },
-            validate: function() {
+            validate: async function() {
                 const key = [3, 5, 1, 5, 4, 2];
                 const answers = JSON.parse(localStorage.getItem('answers'));
                 for (let i = 0; i < 6; i++) {
@@ -79,7 +79,9 @@
                     if (!answered) return;
                     const answeredId = answered.id;
                     if (answeredId !== key[i]) {
-                        // play wrong sound
+                        const path = 'https://sollunad.de/SURVEY_PROGRAM/sound/wrong.ogg';
+                        const audio = new Audio(path);
+                        await audio.play();
                         return;
                     }
                 }
